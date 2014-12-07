@@ -126,7 +126,8 @@ zi.config=function(){
       "canvas":{
         "margin":"0",
         "padding":"0",
-        "border":"0"
+        "border":"0",
+        "position":"fixed"
       }
     };
     return css;
