@@ -16,6 +16,7 @@ app.t={};
 
 app.m.bounds=false;
 app.m.paper=false;
+app.m.dateOffset=0;
 app.m.selectedDate=new Date();
 app.m.appName="LongNow Chalk";
 
@@ -65,15 +66,16 @@ app.v.initialReveal=function(){
 app.v.drawMandalla=function(date){
   var d=date||app.m.selectedDate;
   var chnc = new Chance(d.toDateString() );
+  //var chnc=new Chance();
   paper.project.clear();
-  
+  var strokeWidth=1;
 	var circle=function(x,y,r){
 		var path = new paper.Path.Circle({
     	//center: paper.view.center,
     	center:[x,y],
     	radius: r,
     	strokeColor:"#fff",
-    	strokeWidth:2
+    	strokeWidth:strokeWidth
     });
 		  
 	};
@@ -81,6 +83,7 @@ app.v.drawMandalla=function(date){
 	var diamond=function(x,y,l,w1,w2){
     var p=new paper.Path;
     p.strokeColor="#fff";
+    p.strokeWidth=strokeWidth;
     p.add([x,y]);
     p.add([x+(l/2),y-(l/2)]);
     p.add([x+l,y]);
@@ -101,6 +104,7 @@ app.v.drawMandalla=function(date){
     );
     p.add([x+l,y]);
     p.strokeColor="#fff";
+    p.strokeWidth=strokeWidth;
     return p;
 	};
 
@@ -149,6 +153,36 @@ app.v.initPaper=function(){
 
 app.v.listeners=function(){
 
+  $("body").on("nextDay",function(){
+    app.m.dateOffset++;
+    app.m.selectedDate=moment()
+      .add(app.m.dateOffset,'d')
+      .toDate();
+    app.v.drawMandalla(app.m.selectedDate);
+  });
+  
+  $("body").on("previousDay",function(){
+    app.m.dateOffset--;
+    app.m.selectedDate=moment()
+      .add(app.m.dateOffset,'d')
+      .toDate();
+    app.v.drawMandalla(app.m.selectedDate);
+  });
+
+
+  //keydowns
+  
+  $("body").keydown(function(){
+    var key=event.which;
+    //console.log(key);
+    if (key==37){
+      $("body").trigger("previousDay");
+    }else if(key==39){
+      $("body").trigger("nextDay");
+    }
+  });
+  
+
 };
 
 ///////////////////////////////////////////////////////end views
@@ -157,8 +191,8 @@ app.v.listeners=function(){
 app.t.layout=function(){
   var d="";
   d+="<canvas id='paper' data-paper-resize='true'></canvas>";
-  //d+="<div id='yesterday'>Yesterday's Mandalla Clock</div>";
-  //d+="<div id='tomorrow'>Tomorrow's Mandalla Clock</div>";
+  //d+="<div id='previousDay'>See the Previous Day's Mandalla Clock</div>";
+  //d+="<div id='nextDay'>See the Next Day's Mandalla Clock</div>";
   return d;
 };
 
