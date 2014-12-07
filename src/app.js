@@ -16,6 +16,7 @@ app.t={};
 
 app.m.bounds=false;
 app.m.paper=false;
+app.m.selectedDate=new Date();
 app.m.appName="LongNow Chalk";
 
 ///////////////////////////////////////////////////////
@@ -61,15 +62,11 @@ app.v.initBounds=function(){
 app.v.initialReveal=function(){
 };
 
-app.v.initPaper=function(){
-  var canvas = document.getElementById('paper');
-  var d=new Date();
+app.v.drawMandalla=function(date){
+  var d=date||app.m.selectedDate;
   var chnc = new Chance(d.toDateString() );
-  //var chnc = new Chance();
-	// Create an empty project and a view for the canvas:
-	paper.setup(canvas);
-	
-	// Now I'll create a circle function that takes an x, y, and r
+  paper.project.clear();
+  
 	var circle=function(x,y,r){
 		var path = new paper.Path.Circle({
     	//center: paper.view.center,
@@ -140,7 +137,13 @@ app.v.initPaper=function(){
     }
   }
 
-	// Draw the view now:
+};
+
+app.v.initPaper=function(){
+  var canvas = document.getElementById('paper');
+  //var chnc = new Chance();
+	paper.setup(canvas);
+	app.v.drawMandalla();
 	paper.view.draw();
 };
 
@@ -153,9 +156,9 @@ app.v.listeners=function(){
 
 app.t.layout=function(){
   var d="";
+  d+="<canvas id='paper' data-paper-resize='true'></canvas>";
   //d+="<div id='yesterday'>Yesterday's Mandalla Clock</div>";
   //d+="<div id='tomorrow'>Tomorrow's Mandalla Clock</div>";
-  d+="<canvas id='paper' data-paper-resize='true'></canvas>";
   return d;
 };
 
@@ -180,6 +183,12 @@ zi.config=function(){
       "canvas#paper":{
         "z-index":"-1"
       },
+      "div#yesterday":{
+        "float":"left"
+      },
+      "div#tomorrow":{
+        "float":"right"
+      }
     };
     return css;
 };
