@@ -65,6 +65,7 @@ app.v.initPaper=function(){
   var canvas = document.getElementById('paper');
   var d=new Date();
   var chnc = new Chance(d.toDateString() );
+  //var chnc = new Chance();
 	// Create an empty project and a view for the canvas:
 	paper.setup(canvas);
 	
@@ -79,6 +80,32 @@ app.v.initPaper=function(){
     });
 		  
 	};
+	
+	var diamond=function(x,y,l,w1,w2){
+    var p=new paper.Path;
+    p.strokeColor="#fff";
+    p.add([x,y]);
+    p.add([x+(l/2),y-(l/2)]);
+    p.add([x+l,y]);
+    p.add([x+(l/2),y+(l/2)]);
+    p.add([x,y]);
+    return p;
+	};
+	
+	var petal=function(x,y,l,w1,w2){
+    var p=new paper.Path;
+    var w1=w1||2;
+    p.add([x+l,y]);
+    p.add(new paper.Segment(
+      new paper.Point([x,y]),
+      new paper.Point([0,-l/w1]),
+      new paper.Point([0,l/w1])
+      )
+    );
+    p.add([x+l,y]);
+    p.strokeColor="#fff";
+    return p;
+	};
 
   var orbits=24;
   var r=0;
@@ -87,10 +114,29 @@ app.v.initPaper=function(){
   for (var i=0;i<orbits;i++){
     r+=20;
     var planetRadius=chnc.integer({min:2,max:30});
+    var w1=chnc.integer({min:1,max:3});
+    var ringType=chnc.pick(["petal","petal","circle","diamond"]);
     for (var j=0;j<planets;j++){
       var theta=j*theta_interval;
-      var position=geo.getPoint(paper.view.bounds.centerX,paper.view.bounds.centerY,r,theta)
-      circle(position.x2,position.y2,planetRadius);
+      var position=geo.getPoint(paper.view.bounds.centerX,paper.view.bounds.centerY,r,theta);
+      if (ringType=="circle"){
+        circle(position.x2,position.y2,planetRadius);   
+      }else if (ringType=="diamond"){
+        diamond(
+          paper.view.bounds.centerX+r,
+          paper.view.bounds.centerY,
+          planetRadius,
+          w1
+          ).rotate(theta,paper.view.center);
+        
+      }else{
+        petal(
+          paper.view.bounds.centerX+r,
+          paper.view.bounds.centerY,
+          planetRadius,
+          w1
+          ).rotate(theta,paper.view.center);
+      }            
     }
   }
 
@@ -107,6 +153,8 @@ app.v.listeners=function(){
 
 app.t.layout=function(){
   var d="";
+  //d+="<div id='yesterday'>Yesterday's Mandalla Clock</div>";
+  //d+="<div id='tomorrow'>Tomorrow's Mandalla Clock</div>";
   d+="<canvas id='paper' data-paper-resize='true'></canvas>";
   return d;
 };
@@ -128,7 +176,10 @@ zi.config=function(){
         "padding":"0",
         "border":"0",
         "position":"fixed"
-      }
+      },
+      "canvas#paper":{
+        "z-index":"-1"
+      },
     };
     return css;
 };
