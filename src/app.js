@@ -63,48 +63,39 @@ app.v.initialReveal=function(){
 
 app.v.initPaper=function(){
   var canvas = document.getElementById('paper');
-		// Create an empty project and a view for the canvas:
-		paper.setup(canvas);
-		
-		/*
-		// Create a Paper.js Path to draw a line into it:
-		var path = new paper.Path();
-		// Give the stroke a color
-		path.strokeColor = 'black';
-		var start = new paper.Point(100, 100);
-		// Move to start and draw a line from there
-		path.moveTo(start);
-		// Note that the plus operator on Point objects does not work
-		// in JavaScript. Instead, we need to call the add() function:
-		path.lineTo(start.add([ 200, -50 ]));
-		*/
-		// Now I'll create a circle function that takes an x, y, and r
-		var circle=function(x,y,r){
-  		var path = new paper.Path.Circle({
-      	//center: paper.view.center,
-      	center:[x,y],
-      	radius: r,
-      	strokeColor:"#fff",
-      	strokeWidth:2
-      });
+  var d=new Date();
+  var chnc = new Chance(d.toDateString() );
+	// Create an empty project and a view for the canvas:
+	paper.setup(canvas);
+	
+	// Now I'll create a circle function that takes an x, y, and r
+	var circle=function(x,y,r){
+		var path = new paper.Path.Circle({
+    	//center: paper.view.center,
+    	center:[x,y],
+    	radius: r,
+    	strokeColor:"#fff",
+    	strokeWidth:2
+    });
 		  
-		}
+	};
 
-    var orbits=24;
-    var r=0;
-    var planets=60;
-    var theta_interval=360/planets;
-    for (var i=0;i<orbits;i++){
-      r+=20;
-      for (var j=0;j<planets;j++){
-        var theta=j*theta_interval;
-        var position=geo.getPoint(paper.view.bounds.centerX,paper.view.bounds.centerY,r,theta)
-        circle(position.x2,position.y2,_.random(2,4));
-      }
+  var orbits=24;
+  var r=0;
+  var planets=60;
+  var theta_interval=360/planets;
+  for (var i=0;i<orbits;i++){
+    r+=20;
+    var planetRadius=chnc.integer({min:2,max:30});
+    for (var j=0;j<planets;j++){
+      var theta=j*theta_interval;
+      var position=geo.getPoint(paper.view.bounds.centerX,paper.view.bounds.centerY,r,theta)
+      circle(position.x2,position.y2,planetRadius);
     }
+  }
 
-		// Draw the view now:
-		paper.view.draw();
+	// Draw the view now:
+	paper.view.draw();
 };
 
 app.v.listeners=function(){
@@ -136,72 +127,6 @@ zi.config=function(){
         "margin":"0",
         "padding":"0",
         "border":"0"
-      },
-      "div#canvas":{
-        "z-index":"-1",
-        "position":"fixed",
-        "top":"0px",
-        "left":"0px",
-        "width":"100%",
-        "height":app.m.bounds.height+"px",
-        "padding":"0",
-        "margin":"0",
-        "border":"0"
-      },
-      "div#tweetles":{
-        "position":"absolute",
-        "top":"0px",
-        "left":"0px",
-        "margin-right":"75px"
-      },
-      "div.tweetle":{
-        "display":"none",
-        "margin":"30px",
-        "margin-right":"0px",
-        "background":"#333",
-        "font-family":"sans-serif",
-        "color":"#fff",
-        "padding":"10px",
-        "border":"1px solid #333",
-        "opacity": 0.8,
-        "filter": "alpha(opacity=80)" /* For IE8 and earlier */
-      },
-      "div.tweetle div.created_at":{
-        "text-align":"right",
-        "font-size":"0.7em",
-        "border-bottom":"1px solid #333"
-      },
-      "div.tweetle div.user":{
-        "text-align":"right",
-        "border-top":"1px solid #333",
-        "cursor":"pointer"
-      },
-      "div.tweetle div.message":{
-        "font-size":""+Math.max(1.5,(app.m.bounds.right/600))+"em"
-      },
-      "div#pseudomodal":{
-        "display":"none",
-        "position":"fixed",
-        "width":app.m.bounds.right-120+"px",
-        "top":Math.floor(app.m.bounds.bottom/3)+"px",
-        "left":"0px",
-        "padding":"0",
-        "z-index":2,
-        "opacity":0.9,
-        "filter":"alpha(opacity=90)",
-        "margin":"60px"
-      },
-      "div#pseudomodal input[type=text]":{
-        "width":"100%",
-        "border":"1px solid #000",
-        "padding":"20px 0 20px 0",
-        "font-size":""+Math.max(1.5,(app.m.bounds.right/400))+"em",
-        "text-align":"center",
-        "background":"#000",
-        "color":"#fff"
-      },
-      "div#tweetles h1":{
-        "display":"none"
       }
     };
     return css;
