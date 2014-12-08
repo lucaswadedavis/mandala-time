@@ -18,7 +18,7 @@ app.m.bounds=false;
 app.m.paper=false;
 app.m.dateOffset=0;
 app.m.selectedDate=new Date();
-app.m.appName="LongNow Chalk";
+app.m.appName="Mandala Time";
 
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////begin controllers
@@ -63,7 +63,7 @@ app.v.initBounds=function(){
 app.v.initialReveal=function(){
 };
 
-app.v.drawMandalla=function(date){
+app.v.drawMandala=function(date){
   var d=date||app.m.selectedDate;
   var chnc = new Chance(d.toDateString() );
   //var chnc=new Chance();
@@ -147,7 +147,7 @@ app.v.initPaper=function(){
   var canvas = document.getElementById('paper');
   //var chnc = new Chance();
 	paper.setup(canvas);
-	app.v.drawMandalla();
+	app.v.drawMandala();
 	paper.view.draw();
 };
 
@@ -158,7 +158,7 @@ app.v.listeners=function(){
     app.m.selectedDate=moment()
       .add(app.m.dateOffset,'d')
       .toDate();
-    app.v.drawMandalla(app.m.selectedDate);
+    app.v.drawMandala(app.m.selectedDate);
   });
   
   $("body").on("previousDay",function(){
@@ -166,7 +166,7 @@ app.v.listeners=function(){
     app.m.selectedDate=moment()
       .add(app.m.dateOffset,'d')
       .toDate();
-    app.v.drawMandalla(app.m.selectedDate);
+    app.v.drawMandala(app.m.selectedDate);
   });
 
 
@@ -191,8 +191,8 @@ app.v.listeners=function(){
 app.t.layout=function(){
   var d="";
   d+="<canvas id='paper' data-paper-resize='true'></canvas>";
-  //d+="<div id='previousDay'>See the Previous Day's Mandalla Clock</div>";
-  //d+="<div id='nextDay'>See the Next Day's Mandalla Clock</div>";
+  //d+="<div id='previousDay'>See the Previous Day's Mandala Clock</div>";
+  //d+="<div id='nextDay'>See the Next Day's Mandala Clock</div>";
   return d;
 };
 
