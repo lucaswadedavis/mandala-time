@@ -171,6 +171,9 @@ app.v.listeners=function(){
     app.v.drawMandala(app.m.selectedDate);
   });
 
+  $("body").on("click",function(){
+    $("body").trigger("nextDay");
+  });
 
   //keydowns
   
