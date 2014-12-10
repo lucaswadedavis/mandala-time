@@ -144,6 +144,7 @@ app.v.drawMandala=function(date){
     }
   }
 
+	paper.view.draw();
 };
 
 app.v.initPaper=function(){
@@ -151,7 +152,6 @@ app.v.initPaper=function(){
   //var chnc = new Chance();
 	paper.setup(canvas);
 	app.v.drawMandala();
-	paper.view.draw();
 };
 
 app.v.listeners=function(){
@@ -177,9 +177,7 @@ app.v.listeners=function(){
   });
 
   //keydowns
-
-
-  /*
+  
   $("body").keydown(function(){
     var key=event.which;
     //console.log(key);
@@ -189,7 +187,7 @@ app.v.listeners=function(){
       $("body").trigger("nextDay");
     }
   });
-  */
+  
 
 };
 
