@@ -69,12 +69,13 @@ app.v.drawMandala=function(date){
   //var chnc=new Chance();
   paper.project.clear();
   var strokeWidth=1;
+  var strokeColor="#fff";
 	var circle=function(x,y,r){
 		var path = new paper.Path.Circle({
     	//center: paper.view.center,
     	center:[x,y],
     	radius: r,
-    	strokeColor:"#fff",
+    	strokeColor:strokeColor,
     	strokeWidth:strokeWidth
     });
 		  
@@ -82,7 +83,7 @@ app.v.drawMandala=function(date){
 	
 	var diamond=function(x,y,l,w1,w2){
     var p=new paper.Path;
-    p.strokeColor="#fff";
+    p.strokeColor=strokeColor;
     p.strokeWidth=strokeWidth;
     p.add([x,y]);
     p.add([x+(l/2),y-(l/2)]);
@@ -103,7 +104,7 @@ app.v.drawMandala=function(date){
       )
     );
     p.add([x+l,y]);
-    p.strokeColor="#fff";
+    p.strokeColor=strokeColor;
     p.strokeWidth=strokeWidth;
     return p;
 	};
@@ -176,7 +177,9 @@ app.v.listeners=function(){
   });
 
   //keydowns
-  
+
+
+  /*
   $("body").keydown(function(){
     var key=event.which;
     //console.log(key);
@@ -186,7 +189,7 @@ app.v.listeners=function(){
       $("body").trigger("nextDay");
     }
   });
-  
+  */
 
 };
 
@@ -195,7 +198,7 @@ app.v.listeners=function(){
 
 app.t.layout=function(){
   var d="";
-  d+="<canvas id='paper' data-paper-resize='true'></canvas>";
+  d+="<canvas id='paper' data-paper-resize='true' data-paper-keepalive='true'></canvas>";
   //d+="<div id='previousDay'>See the Previous Day's Mandala Clock</div>";
   //d+="<div id='nextDay'>See the Next Day's Mandala Clock</div>";
   return d;
