@@ -155,21 +155,22 @@ app.v.initPaper=function(){
 };
 
 app.v.listeners=function(){
-
-  $("body").on("nextDay",function(){
-    app.m.dateOffset++;
+  var changeDate=function(offset){
+    app.m.dateOffset=app.m.dateOffset+offset;
     app.m.selectedDate=moment()
       .add(app.m.dateOffset,'d')
       .toDate();
     app.v.drawMandala(app.m.selectedDate);
+    
+    $("div#dateDisplay").html(moment(app.m.selectedDate).format("dddd, MMMM Do YYYY"));
+  };
+
+  $("body").on("nextDay",function(){
+    changeDate(1);
   });
   
   $("body").on("previousDay",function(){
-    app.m.dateOffset--;
-    app.m.selectedDate=moment()
-      .add(app.m.dateOffset,'d')
-      .toDate();
-    app.v.drawMandala(app.m.selectedDate);
+    changeDate(-1);
   });
 
   $("body").on("click",function(){
@@ -197,6 +198,7 @@ app.v.listeners=function(){
 app.t.layout=function(){
   var d="";
   d+="<canvas id='paper' data-paper-resize='true' data-paper-keepalive='true'></canvas>";
+  d+="<div id='dateDisplay'>Current Date</div>";
   //d+="<div id='previousDay'>See the Previous Day's Mandala Clock</div>";
   //d+="<div id='nextDay'>See the Next Day's Mandala Clock</div>";
   return d;
@@ -209,6 +211,7 @@ zi={};
 zi.config=function(){
     var css={
       "body":{
+        "font-family":"sans-serif",
         "padding":"0",
         "margin":"0",
         "border":"0",
@@ -228,6 +231,13 @@ zi.config=function(){
       },
       "div#tomorrow":{
         "float":"right"
+      },
+      "div#dateDisplay":{
+        "padding":"30px",
+        "color":"#fff",
+        "font-size":"2em",
+        "position":"fixed",
+        "z-index":"0"
       }
     };
     return css;
