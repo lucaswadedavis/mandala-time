@@ -198,7 +198,7 @@ app.v.listeners=function(){
 app.t.layout=function(){
   var d="";
   d+="<canvas id='paper' data-paper-resize='true' data-paper-keepalive='true'></canvas>";
-  d+="<div id='dateDisplay'>Current Date</div>";
+  d+="<div id='dateDisplay'>"+moment(app.m.selectedDate).format("dddd, MMMM Do YYYY")+"</div>";
   //d+="<div id='previousDay'>See the Previous Day's Mandala Clock</div>";
   //d+="<div id='nextDay'>See the Next Day's Mandala Clock</div>";
   return d;
@@ -234,8 +234,7 @@ zi.config=function(){
       },
       "div#dateDisplay":{
         "padding":"30px",
-        "color":"#fff",
-        "font-size":"2em",
+        "color":"#ddd",
         "position":"fixed",
         "z-index":"0"
       }
