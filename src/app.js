@@ -173,8 +173,12 @@ app.v.listeners=function(){
     changeDate(-1);
   });
 
-  $("body").on("click",function(){
-    $("body").trigger("nextDay");
+  $("body").on("click",function(event){
+    if (event.pageX>paper.view.bounds.centerX){
+      $("body").trigger("nextDay");
+    }else{
+      $("body").trigger("previousDay");
+    }
   });
 
   //keydowns
