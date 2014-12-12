@@ -152,6 +152,10 @@ app.v.initPaper=function(){
   //var chnc = new Chance();
 	paper.setup(canvas);
 	app.v.drawMandala();
+	paper.view.onResize=function(event){
+	  app.v.drawMandala();
+	  paper.view.draw();
+	};
 };
 
 app.v.listeners=function(){
