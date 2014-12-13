@@ -17,6 +17,7 @@ app.t={};
 app.m.bounds=false;
 app.m.paper=false;
 app.m.dateOffset=0;
+app.m.globalAnimationLock=false;
 app.m.selectedDate=new Date();
 app.m.appName="Mandala Time";
 
@@ -158,9 +159,13 @@ app.v.initPaper=function(){
 	};
 	var mc=new Hammer(document.getElementById('paper'));
 	mc.on("panleft panright",function(event){
-	  if (event.type==="panleft"){
+	  if (!app.m.globalAnimationLock && event.type==="panleft"){
+	    app.m.globalAnimationLock=true;
+	    setTimeout(function(){app.m.globalAnimationLock=false},100);
 	    $("body").trigger("nextDay");
-	  }else if (event.type==="panright"){
+	  }else if (!app.m.globalAnimationLock && event.type==="panright"){
+	    app.m.globalAnimationLock=true;
+	    setTimeout(function(){app.m.globalAnimationLock=false},100);
 	    $("body").trigger("previousDay");
 	  }
 	});
