@@ -156,6 +156,14 @@ app.v.initPaper=function(){
 	  app.v.drawMandala();
 	  paper.view.draw();
 	};
+	var mc=new Hammer(document.getElementById('paper'));
+	mc.on("panleft panright",function(event){
+	  if (event.type==="panleft"){
+	    $("body").trigger("nextDay");
+	  }else if (event.type==="panright"){
+	    $("body").trigger("previousDay");
+	  }
+	});
 };
 
 app.v.listeners=function(){
@@ -177,6 +185,9 @@ app.v.listeners=function(){
     changeDate(-1);
   });
 
+
+  //replace this with the swipe listeners;
+  /*
   $("body").on("click",function(event){
     if (event.pageX>paper.view.bounds.centerX){
       $("body").trigger("nextDay");
@@ -184,7 +195,7 @@ app.v.listeners=function(){
       $("body").trigger("previousDay");
     }
   });
-
+  */
   //keydowns
   
   $("body").keydown(function(){
