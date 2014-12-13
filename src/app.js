@@ -161,11 +161,11 @@ app.v.initPaper=function(){
 	mc.on("panleft panright",function(event){
 	  if (!app.m.globalAnimationLock && event.type==="panleft"){
 	    app.m.globalAnimationLock=true;
-	    setTimeout(function(){app.m.globalAnimationLock=false},600);
+	    setTimeout(function(){app.m.globalAnimationLock=false},2000);
 	    $("body").trigger("nextDay");
 	  }else if (!app.m.globalAnimationLock && event.type==="panright"){
 	    app.m.globalAnimationLock=true;
-	    setTimeout(function(){app.m.globalAnimationLock=false},600);
+	    setTimeout(function(){app.m.globalAnimationLock=false},2000);
 	    $("body").trigger("previousDay");
 	  }
 	});
