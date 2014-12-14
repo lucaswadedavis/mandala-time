@@ -159,6 +159,7 @@ app.v.initPaper=function(){
 	};
 	var mc=new Hammer(document.getElementById('paper'));
 	mc.on("panleft panright",function(event){
+	  console.dir(event);
 	  if (!app.m.globalAnimationLock){
 	    app.m.globalAnimationLock=true;
   	  if (event.type==="panleft"){
@@ -166,7 +167,7 @@ app.v.initPaper=function(){
   	  }else if (event.type==="panright"){
   	    $("body").trigger("previousDay");
   	  }
-  	 setTimeout(function(){app.m.globalAnimationLock=false;},2000);
+  	 setTimeout(function(){app.m.globalAnimationLock=false;},600);
 	  }
 	});
 };
