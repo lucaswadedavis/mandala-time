@@ -159,7 +159,6 @@ app.v.initPaper=function(){
 	};
 	var mc=new Hammer(document.getElementById('paper'));
 	mc.on("panleft panright",function(event){
-	  console.dir(event);
 	  if (!app.m.globalAnimationLock){
 	    app.m.globalAnimationLock=true;
   	  if (event.type==="panleft"){
