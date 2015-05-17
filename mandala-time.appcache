@@ -1,0 +1,21 @@
+CACHE MANIFEST
+#2015-05-15 v1
+
+# Explicitly cached 'master entries'.
+CACHE:
+./index.html
+./lib/jquery.js
+./lib/underscore-1.7.0.js
+./lib/moment-2.8.3.js
+./lib/paper-0.9.21.js
+./lib/chance-0.7.0.js
+./lib/hammer-2.0.4.js
+./lib/davis.js
+./src/app.js
+
+# Resources that require the user to be online.
+NETWORK:
+*
+
+FALLBACK:
+#probably put something here eventually
