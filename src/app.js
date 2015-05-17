@@ -159,14 +159,14 @@ app.v.initPaper=function(){
 	};
 	var mc=new Hammer(document.getElementById('paper'));
 	mc.on("panleft panright",function(event){
-	  if (!app.m.globalAnimationLock && event.type==="panleft"){
+	  if (!app.m.globalAnimationLock){
 	    app.m.globalAnimationLock=true;
-	    setTimeout(function(){app.m.globalAnimationLock=false},100);
-	    $("body").trigger("nextDay");
-	  }else if (!app.m.globalAnimationLock && event.type==="panright"){
-	    app.m.globalAnimationLock=true;
-	    setTimeout(function(){app.m.globalAnimationLock=false},100);
-	    $("body").trigger("previousDay");
+  	  if (event.type==="panleft"){
+  	    $("body").trigger("nextDay");
+  	  }else if (event.type==="panright"){
+  	    $("body").trigger("previousDay");
+  	  }
+  	 setTimeout(function(){app.m.globalAnimationLock=false;},600);
 	  }
 	});
 };
